@@ -58,5 +58,20 @@ public classs UserControoler:Controller {
 
     }
 
+
+     [HttpPost]
+    public ActionResult Update(UserViewModel model){
+
+        string data = JsonConverot.SerializeObject(model);
+        stringContent content = new stringContent(data, Encording.UTF8 , "applicaiton/json");
+
+        HttpResponseMessage response = client.PustAsync( client.BaseAddress + "/user/"+model.userId , content ).Result;
+        if (response.isSuccessStateCode)
+        {
+            return RedirectToAction("Index"); /// redirect to index page 
+        }
+        return View("update",model); // redirect to create view 
+    }
+
 }
 
