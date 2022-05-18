@@ -42,5 +42,21 @@ public classs UserControoler:Controller {
         }
         return View(); // redirect to create view 
     }
+
+
+    
+    public ActionResult update(int id){
+        UserViewModel model = new UserViewModel();
+        HttpResponseMessage response = client.GetAsync(client.baseAddress+"/user/"+ id ).Result;
+        if (response.isSuccessStateCode){
+
+                string data = response.Content.ReadAdStringAsync().Result; // json information 
+                model =  JsonConvert.deseriealizeObject<UserViewModel>(data);
+
+        }           
+        return View(model);
+
+    }
+
 }
 
