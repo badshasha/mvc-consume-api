@@ -12,11 +12,17 @@ public classs UserControoler:Controller {
     }
 
     public ActionResult Index(){
+
+        List<userViewModel> modelList = new List<userViewModel>();
+
         HttpResponseMessage response = client.GetAsync(client.baseAddress+"/user").Result();
         if (response.isSuccessStateCode){
-            string data = response.Content.ReadAdStringAsync().Result();
+            string data = response.Content.ReadAdStringAsync().Result(); // json information 
+
+            // use newton for deseriealize 
+            modelList =  JsonConvert.deseriealizeObject<List<UserViewModel>>(data);
         }
-        return View();
+        return View(modelList);
 
     }
 
