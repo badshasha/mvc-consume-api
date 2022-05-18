@@ -26,5 +26,21 @@ public classs UserControoler:Controller {
 
     }
 
+    public ActionResult Create(){
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(UserViewModel model){
+
+        string data = JsonConverot.SerializeObject(model);
+        stringContent content = new stringContent(data, Encording.UTF8 , "applicaiton/json");
+        HttpResponseMessage response = client.PostAsync(client.BaseAddress+"/user",content).Result;
+        if (response.isSuccessStateCode)
+        {
+            return RedirectToAction("Index"); /// redirect to index page 
+        }
+        return View(); // redirect to create view 
+    }
 }
 
